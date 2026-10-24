@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "birdhat",
+  "version": "${version}",
+  "name": "Bird Hat",
+  "description": "A little animated songbird that sits on your head. Client-side cosmetic.",
+  "authors": ["You"],
+  "license": "MIT",
+  "icon": "assets/birdhat/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.birdhat.BirdHatClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "minecraft": "~26.1",
+    "fabric-api": "*",
+    "java": ">=25"
+  }
+}
