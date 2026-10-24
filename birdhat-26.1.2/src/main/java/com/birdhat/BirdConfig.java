@@ -21,8 +21,10 @@ public final class BirdConfig {
     public static boolean showOnEveryone = false;
     public static float scale = 1.0f;
     public static float heightOffset = 0.0f;
+    public static int goofiness = 1;
 
     private static Identifier texture;
+    private static Path file;
 
     private BirdConfig() {}
 
@@ -34,7 +36,7 @@ public final class BirdConfig {
     }
 
     public static void load() {
-        Path file = FabricLoader.getInstance().getConfigDir().resolve("birdhat.properties");
+        file = FabricLoader.getInstance().getConfigDir().resolve("birdhat.properties");
         Properties p = new Properties();
         try {
             if (Files.exists(file)) {
@@ -42,29 +44,38 @@ public final class BirdConfig {
             }
             enabled = Boolean.parseBoolean(p.getProperty("enabled", "true"));
             showOnEveryone = Boolean.parseBoolean(p.getProperty("show_on_everyone", "false"));
-            scale = clamp(Float.parseFloat(p.getProperty("scale", "1.0")), 0.25f, 3f);
+            scale = clamp(Float.parseFloat(p.getProperty("scale", "1.0")), 0.25f, 4f);
             heightOffset = clamp(Float.parseFloat(p.getProperty("height_offset_pixels", "0")), -8f, 16f);
+            goofiness = (int) clamp(Integer.parseInt(p.getProperty("goofiness", "1").trim()), 0, 2);
             String v = p.getProperty("variant", "bluebird").trim().toLowerCase();
             variant = "bluebird";
             for (String known : VARIANTS) if (known.equals(v)) variant = v;
         } catch (Exception e) {
             System.err.println("[birdhat] Could not read config, using defaults: " + e);
         }
-        save(file);
+        save();
     }
 
-    private static void save(Path file) {
+    public static void setVariant(String v) {
+        variant = v;
+        texture = null;
+        save();
+    }
+
+    public static void save() {
+        if (file == null) return;
         Properties p = new Properties();
         p.setProperty("enabled", String.valueOf(enabled));
         p.setProperty("variant", variant);
         p.setProperty("show_on_everyone", String.valueOf(showOnEveryone));
         p.setProperty("scale", String.valueOf(scale));
         p.setProperty("height_offset_pixels", String.valueOf(heightOffset));
+        p.setProperty("goofiness", String.valueOf(goofiness));
         try {
             Files.createDirectories(file.getParent());
             try (Writer w = Files.newBufferedWriter(file)) {
                 p.store(w, "Bird Hat config. variant = bluebird | cardinal | canary | robin. "
-                        + "height_offset_pixels raises the bird (e.g. 1 if it clips into helmets). Restart the game after editing.");
+                        + "height_offset_pixels raises the bird (e.g. 1 if it clips into helmets). goofiness = 0 chill, 1 goofy, 2 chaos. Or just press B in game.");
             }
         } catch (Exception e) {
             System.err.println("[birdhat] Could not write config: " + e);

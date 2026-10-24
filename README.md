@@ -3,7 +3,9 @@
 An animated songbird that sits on your head. Client-side Fabric cosmetic for
 Minecraft **1.21.11** and **26.1.2**. It bobs, looks around, flicks its tail,
 hops and flutters every few seconds, flaps when you run, and ducks when you sneak.
-Variants: bluebird, cardinal, canary, robin.
+A chubby, googly-eyed bird about one block tall: jiggly pupils, a chattering beak,
+floppy crest, squash-and-stretch bouncing, random spins and derpy head tilts.
+Variants: bluebird, cardinal, canary, robin. Goofiness: Chill / Goofy / CHAOS.
 
 ## Getting the jar
 GitHub builds it automatically on every push: open the **Actions** tab, click the
@@ -15,7 +17,13 @@ under **Artifacts**. Unzip it to get the mod jar.
 2. Edit instance > Mods > Download mods > add **Fabric API**.
 3. Mods > Add file > pick the Bird Hat jar. Launch and press F5.
 
-## Config
+## Changing your bird in game
+Press **B** to open the **Bird Wardrobe**. The camera turns around so you can see
+yourself, and you can switch the bird on/off, pick a color, change size and height,
+set goofiness, and toggle birds on everyone. Changes save automatically. You can rebind the key
+in Options > Controls > Key Binds > Bird Hat.
+
+## Config file
 `config/birdhat.properties` in the instance folder (created on first launch):
 
     enabled=true
@@ -23,3 +31,4 @@ under **Artifacts**. Unzip it to get the mod jar.
     show_on_everyone=false    # true = every player gets a bird
     scale=1.0
     height_offset_pixels=0    # try 1 if it sinks into helmets
+    goofiness=1               # 0 chill | 1 goofy | 2 chaos
